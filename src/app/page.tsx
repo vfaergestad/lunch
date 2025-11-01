@@ -10,9 +10,13 @@ export default function Home(): ReactElement {
   useEffect(() => {
     const checkTime = () => {
       const currentTime: Date = new Date();
-      const isLunch =
-        currentTime.getHours() >= 11 && currentTime.getHours() < 12 &&
-          currentTime.getDay() != 6 && currentTime.getDay() != 0;
+      const startTime: Date = new Date(currentTime);
+      startTime.setHours(10, 30, 0, 0);
+      const endTime: Date = new Date(currentTime);
+      endTime.setHours(11, 30, 0, 0);
+
+      const isWeekday: boolean = currentTime.getDay() !== 0 && currentTime.getDay() !== 6;
+      const isLunch: boolean = isWeekday && currentTime >= startTime && currentTime < endTime;
       setIsLunchTime(isLunch);
       setIsLoading(false);
     };
